@@ -25,7 +25,7 @@ assets/
 
 # Desenvolvimento local
 Abra `index.html` no navegador **ou** rode um servidor simples:
-```bash
+bash
 python -m http.server 8000
 # acesse http://localhost:8000
 
