@@ -26,11 +26,12 @@
 <h1 class="text-2xl font-bold text-center uppercase">
     75+ Cancer Screener (75+CS)
   </h1>
-<div class="mt-2 text-center text-gray-700 text-sm md:text-base font-medium">SCREENING FOR BREAST, COLORECTAL AND PROSTATE CANCER IN 75+ YEARS OLD PATIENTS (MAY BE APPLIED FOR 65+)</div>
-<div class="mt-1 text-center text-gray-600 text-xs md:text-sm leading-relaxed">
+<div class="mt-2 text-center text-gray-700 text-sm md:text-base font-medium">SCREENING FOR BREAST, COLORECTAL AND PROSTATE CANCER IN 75+ YEARS OLD PATIENTS (also applicable for 65+)</div>
+<div class="mt-2 text-center text-gray-700 text-sm md:text-base font-medium">Screening should be repeated annually unless progression of frailty or dementia is observed.</div>
+<div class="mt-1 text-center text-gray-500 text-xs md:text-sm leading-relaxed">
 <div>
 <div class="mt-1">
-<strong>Medicine Department, Discipline of Geriatrics and Gerontology</strong>
+<strong>Discipline of Geriatrics and Gerontology, Department of Medicine</strong>
     </div>
 <div class="mt-1">
 <strong>Paulista School of Medicine (EPM); Federal University of São Paulo (UNIFESP)</strong>
@@ -65,7 +66,7 @@
 <template x-if="step === 1">
 <div class="bg-white shadow rounded-lg p-4">
 <h2 class="text-lg font-semibold mb-2">Step 1 — Frailty</h2>
-<p class="text-sm text-gray-500 mb-4">Fill the Clinical Frailty Scale (CFS) or Fried Criteria. Only one method is needed to proceed.</p>
+<p class="text-sm text-gray-500 mb-4">Fill the Fried Criteria or Clinical Frailty Scale (CFS). Only one method is needed to proceed.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div>
 <label class="text-sm font-medium mb-2 block">FRIED — Fried Criteria*</label>
@@ -74,7 +75,7 @@
 <label class="flex items-center gap-2"><input type="checkbox" x-model="fried.exhaustion"/> Self-reported exhaustion/fatigue</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="fried.lowActivity"/> Low physical activity</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="fried.slowness"/> Slow gait speed (&lt; 0.8 m/s)</label>
-<label class="flex items-center gap-2"><input type="checkbox" x-model="fried.weakness"/> Handgrip strength</label>
+<label class="flex items-center gap-2"><input type="checkbox" x-model="fried.weakness"/> Low handgrip strength</label>
 </div>
 <div class="mt-2 text-xs text-gray-700">
     Selected: <span class="font-semibold" x-text="friedCount"></span>/5 — <span class="font-semibold" x-text="frailtyClass"></span>
@@ -83,7 +84,7 @@
 <strong>Handgrip Strength — Cut-off points</strong><br/>
 <span class="inline-block mt-1">Women: <span class="font-semibold">&lt; 16 kgf</span></span><br/>
 <span class="inline-block">Men: <span class="font-semibold">&lt; 27 kgf</span></span>
-<div class="text-[10px] text-gray-500 mt-1">*Handgrip strength was adapted from original Fried criteria and does not correlate with BMI.</div>
+<div class="text-[10px] text-gray-500 mt-1">*Fried Criteria Modification: Handgrip strength measurements are not adjusted for BMI.</div>
 <div class="text-[10px] text-gray-500 mt-1">Reference: Writing Group for the European Working Group on Sarcopenia in Older People 2 (EWGSOP2), and the Extended Group for EWGSOP2. Sarcopenia: revised European consensus on definition and diagnosis. Age Ageing. 2019;48(1):16-31. doi: 10.1093/ageing/afy169. Erratum in: Age Ageing. 2019;48(4):601. doi: 10.1093/ageing/afz046. PMID: 30312372; PMCID: PMC6322506.</div>
 </div>
 </div>
@@ -153,7 +154,7 @@
 <select class="border rounded w-full px-3 py-2" x-model="dem.smoke"><option>Never</option><option>Former smoker</option><option>Current</option></select></div>
 <div><label class="text-xs block mb-1">ADL dependencies — includes needing help with dressing, bathing, eating, getting in or out of bed, and toileting (0-5)</label><input class="border rounded w-full px-3 py-2" max="5" min="0" type="number" x-model.number="dem.adl"/></div>
 <div><label class="text-xs block mb-1">IADL difficulties — includes difficulty using a telephone, preparing a meal, managing medications, managing money such as paying bills, and shopping for groceries (0-5)</label><input class="border rounded w-full px-3 py-2" max="5" min="0" type="number" x-model.number="dem.iadl"/></div>
-<label class="flex items-center gap-2"><input type="checkbox" x-model="dem.walk"/> Difficulty with walking several blocks</label>
+<label class="flex items-center gap-2"><input type="checkbox" x-model="dem.walk"/> Difficulty walking several blocks</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="dem.vigorous"/> Participates in vigorous physical activity (running/jogging, swimming, cycling, aerobics or gym workout, tennis, or digging with a shovel)</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="dem.diabetes"/> Diabetes</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="dem.heart"/> Heart disease</label>
@@ -670,6 +671,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
 
 
 
