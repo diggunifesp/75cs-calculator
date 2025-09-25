@@ -468,7 +468,7 @@
           // 1) Fragilidade bloqueia
           if (this.blockByFrailty) return { label: 'Screening not recommended', tone: 'danger', reason: 'Very Severely Frail: CSF 8–9.' };
           // 2) Risco alto bloqueia
-          if (this.mortalityHigh === true) return { label: 'Screening not recommended', tone: 'danger', reason: 'Risco de mortalidade em 10 anos ≥50%.' };
+          if (this.mortalityHigh === true) return { label: 'Screening not recommended', tone: 'danger', reason: '10-year mortality risk ≥50%.' };
           // 3) Risco <50% passa por Shared decision-making
           if (this.mortalityHigh === false) {
             if (this.consent === true)  return { label: 'Screening recommended', tone: 'success', reason: 'Shared decision-making: patient/family agree with next steps.' };
@@ -674,6 +674,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
 
 
 
