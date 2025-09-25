@@ -29,6 +29,13 @@
 <div class="mt-2 text-center text-gray-700 text-sm md:text-base font-medium">SCREENING FOR BREAST, COLORECTAL AND PROSTATE CANCER IN 75+ YEARS OLD PATIENTS</div>
 <div class="mt-1 text-center text-gray-600 text-xs md:text-sm leading-relaxed">
 <div>
+<div class="mt-1">
+<strong>Medicine Department, Discipline of Geriatrics and Gerontology</strong>
+    </div>
+<div class="mt-1">
+<strong>Paulista School of Medicine (EPM); Federal University of São Paulo (UNIFESP)</strong>
+    </div>
+<div class="mt-1">
 <strong>Authors:</strong> Marianne Wolff Rezende Teixeira, MD (EPM/UNIFESP); Gisele Colleoni, MD, PhD (EPM/UNIFESP)
     </div>
 <div class="mt-1">
@@ -223,7 +230,7 @@
 <p :class="resultTone.text" class="text-sm mt-2" x-text="result.reason"></p>
 <p class="text-xs mt-2 text-gray-600" x-show="result.label === 'Screening not recommended'">Interventions (pharmacological and non-pharmacological therapies) can be implemented and change this decision.</p>
 <div class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded" x-show="result.label === 'Screening not recommended'">
-<p class="text-xs text-blue-800 mb-2 font-medium">Exemplos de intervenções:</p>
+<p class="text-xs text-blue-800 mb-2 font-medium">Intervention examples:</p>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start justify-items-center text-center">
 <div class="flex flex-col items-center gap-2"><img alt="Healthy Eating" class="h-48 w-auto mx-auto" decoding="async" loading="lazy" src="assets/img/healthy-eating.png"/><p class="text-sm font-medium text-gray-700 mt-2">Healthy Eating</p>
 </div>
@@ -662,6 +669,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
 
 
 
