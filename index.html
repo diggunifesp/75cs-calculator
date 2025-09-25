@@ -26,7 +26,7 @@
 <h1 class="text-2xl font-bold text-center uppercase">
     75+ Cancer Screener (75+CS)
   </h1>
-<div class="mt-2 text-center text-gray-700 text-sm md:text-base font-medium">SCREENING FOR BREAST, COLORECTAL AND PROSTATE CANCER IN 75+ YEARS OLD PATIENTS</div>
+<div class="mt-2 text-center text-gray-700 text-sm md:text-base font-medium">SCREENING FOR BREAST, COLORECTAL AND PROSTATE CANCER IN 75+ YEARS OLD PATIENTS (MAY BE USED FOR 65+)</div>
 <div class="mt-1 text-center text-gray-600 text-xs md:text-sm leading-relaxed">
 <div>
 <div class="mt-1">
@@ -36,10 +36,10 @@
 <strong>Paulista School of Medicine (EPM); Federal University of São Paulo (UNIFESP)</strong>
     </div>
 <div class="mt-1">
-<strong>Authors:</strong> Marianne Wolff Rezende Teixeira, MD (EPM/UNIFESP); Gisele Colleoni, MD, PhD (EPM/UNIFESP)
+<strong>Authors:</strong> Marianne Wolff Rezende Teixeira, MD (UNIFESP); Matheus de Oliveira Barros, MD (UNIFESP); Gisele Colleoni, MD, PhD (UNIFESP)
     </div>
 <div class="mt-1">
-<strong>Contributors:</strong> Maysa Seabra Cendoroglo, MD, PhD (EPM/UNIFESP); Maísa Braga Aguiar, MD (EPM/UNIFESP); Matheus Barros, MD (EPM/UNIFESP)
+<strong>Contributors:</strong> Maísa Braga Aguiar, MD (UNIFESP); Lia Alexandre Botelho de Paula, MD (UNIFESP), MD; Luciano Pereira Soares, PhD (Insper); Adriana Bruscato Bortoluzzo, PhD (Insper); Ana Beatriz Galhardi Di Tommaso, MD, MSc (UNIFESP); Eduardo Canteiro Cruz, MD (UNIFESP); Maysa Seabra Cendoroglo, MD, PhD (UNIFESP)
     </div>
 </div>
 </header>
@@ -68,7 +68,7 @@
 <p class="text-sm text-gray-500 mb-4">Fill the Clinical Frailty Scale (CFS) or Fried Criteria. Only one method is needed to proceed.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div>
-<label class="text-sm font-medium mb-2 block">FRIED — Fried Criteria</label>
+<label class="text-sm font-medium mb-2 block">FRIED — Fried Criteria*</label>
 <div class="space-y-2 text-sm">
 <label class="flex items-center gap-2"><input type="checkbox" x-model="fried.weightLoss"/> Unintentional weight loss ≥5% body weight in the last year</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="fried.exhaustion"/> Self-reported exhaustion/fatigue</label>
@@ -83,6 +83,7 @@
 <strong>Handgrip Strength — Cut-off points</strong><br/>
 <span class="inline-block mt-1">Women: <span class="font-semibold">&lt; 16 kgf</span></span><br/>
 <span class="inline-block">Men: <span class="font-semibold">&lt; 27 kgf</span></span>
+<div class="text-[10px] text-gray-500 mt-1">*Handgrip strength was adapted from original Fried criteria and does not correlate with BMI.</div>
 <div class="text-[10px] text-gray-500 mt-1">Reference: Writing Group for the European Working Group on Sarcopenia in Older People 2 (EWGSOP2), and the Extended Group for EWGSOP2. Sarcopenia: revised European consensus on definition and diagnosis. Age Ageing. 2019;48(1):16-31. doi: 10.1093/ageing/afy169. Erratum in: Age Ageing. 2019;48(4):601. doi: 10.1093/ageing/afz046. PMID: 30312372; PMCID: PMC6322506.</div>
 </div>
 </div>
@@ -367,7 +368,7 @@
         },
         cfs: null,
         get friedCount() { return Object.values(this.fried).filter(Boolean).length; },
-        get frailtyClass(){const c=this.friedCount;if(c===0)return'Robust';if(c<=2)return'Pre-frail';if(c<=4)return'Frail';return'Severely frail';},
+        get frailtyClass(){const c=this.friedCount;if(c===0)return'Robust';if(c<=2)return'Pre-frail';if(c<=4)return'Frail (3-4 criteria)';return'Frail (5 criteria)';},
         
         get risk10Value(){
           // Não mostrar risco se pulou por fragilidade importante
@@ -669,6 +670,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
 
 
 
