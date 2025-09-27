@@ -36,7 +36,7 @@ Padrão SemVer:
 Crie um release: **Releases → Draft a new release → Tag `vX.Y.Z` → Publish**.
 
 # Roadmap
-- Aumentar a fonte dos textos, tente deixar responsivo para o tamanho de tela.
+- Aumentar a fonte dos textos, responsivo para o tamanho de tela.
 - Escolha do CFS em radio buttons ou outra opção mais funcional que a atual
 - Colocar o fluxograma na vertical se a largura da tela é pequena (celular)
 - UI mais dinâmica e visual, com ícones para representar os campos/perguntas
