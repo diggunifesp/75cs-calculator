@@ -35,6 +35,17 @@ Padrão SemVer:
 
 Crie um release: **Releases → Draft a new release → Tag `vX.Y.Z` → Publish**.
 
+# Roadmap
+- Aumentar a fonte dos textos, tente deixar responsivo para o tamanho de tela.
+- Escolha do CFS em radio buttons ou outra opção mais funcional que a atual
+- Colocar o fluxograma na vertical se a largura da tela é pequena (celular)
+- UI mais dinâmica e visual, com ícones para representar os campos/perguntas
+- Resultado final com link de direcionamento para uma página mais completa de recomendações (que pode ser de terceiros) sobre saúde, não só os ícones.
+- Bloquear os campos de peso e altura para valores positivos (bloquear negativos) e uma faixa máxima, como uma altura não maior que 3m, um peso não maior que 400kg.
+- Tooltip ou janela com informações para ajudar preencher os ADL e IADL
+- Ajustes de fórmulas do cálculo de risco (atualmente "former smoker" afeta mais o risco de mortalidade que o "current smoker" no índice de Deardorff)
+- Informações sobre coleta do número de usos da plataforma.
+
 # Disclaimer:
 Esta calculadora é fornecida apenas para fins educacionais e informativos e não substitui julgamento clínico, diretrizes oficiais ou aconselhamento médico. Nenhuma garantia é oferecida quanto à exatidão ou adequação a um propósito específico.
 
