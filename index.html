@@ -83,7 +83,7 @@
 <span class="inline-block mt-1">Women: <span class="font-semibold">&lt; 16 kgf</span></span><br/>
 <span class="inline-block">Men: <span class="font-semibold">&lt; 27 kgf</span></span>
 <div class="text-[10px] text-gray-500 mt-1">
-  *Fried Criteria Modification: Handgrip strength measurements are not adjusted for BMI.<sup><a href="#ref5">5</a></sup>
+  *Fried Criteria Modification: Handgrip strength measurements are not adjusted for BMI.<sup><a href="#ref5">2</a></sup>
 </div>
 
 </div>
@@ -252,7 +252,8 @@
 <h2 :class="resultTone.text" class="text-xl font-bold" x-text="result.label"></h2>
 <p :class="resultTone.text" class="text-sm mt-2" x-text="result.reason"></p>
 <p class="text-xs mt-2 text-gray-600" x-show="result.label === 'Screening not recommended'">Interventions (pharmacological and non-pharmacological therapies) can be implemented and change this decision.</p>
-<div class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded" x-show="result.label === 'Screening not recommended'">
+<div class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded"
+     x-show="['Screening not recommended','Screening recommended'].includes(result.label)">
 <p class="text-xs text-blue-800 mb-2 font-medium">Intervention examples:</p>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start justify-items-center text-center">
 <div class="flex flex-col items-center gap-2"><img alt="Healthy Eating" class="h-48 w-auto mx-auto" decoding="async" loading="lazy" src="assets/img/healthy-eating.png"/><p class="text-sm font-medium text-gray-700 mt-2">Healthy Eating</p>
@@ -716,4 +717,5 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
 
