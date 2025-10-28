@@ -23,11 +23,11 @@
 <body class="bg-gray-50 min-h-screen text-gray-800" x-data="fluxograma()"><a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-white border rounded px-3 py-2" href="#main">Skip to content</a><main id="main">
 <div class="max-w-6xl mx-auto px-4 py-6">
 <header class="mb-6">
-<h1 class="text-2xl font-bold text-center uppercase">
-    75+ Cancer Screener (75+CS)
-  </h1>
-<div class="mt-2 text-center text-gray-700 text-sm md:text-base font-medium">SCREENING FOR BREAST, COLORECTAL AND PROSTATE CANCER IN 75+ YEARS OLD PATIENTS (also applicable for 65+)</div>
-<div class="mt-2 text-center text-gray-500 text-sm md:text-base font-medium italic">Screening should be repeated annually.</div>
+<h1 class="text-2xl font-bold text-center uppercase text-blue-700">
+  75+ Cancer Screener (75+CS)
+</h1>
+<div class="mt-2 font-bold text-center text-blue-600 text-sm md:text-base font-medium">SCREENING FOR BREAST, COLORECTAL AND PROSTATE CANCER IN 75+ YEARS OLD PATIENTS (ALSO APPLICABLE FOR 65+)</div>
+<div class="mt-2 text-center text-gray-500 text-sm md:text-base font-medium italic">This instrument may be reapplied whenever indicated.</div>
     <div>
 <div class="mt-1 text-center text-gray-500 text-xs md:text-sm leading-relaxed">
 <div>
@@ -35,10 +35,10 @@
 <strong>Discipline of Geriatrics and Gerontology, Department of Medicine. Paulista School of Medicine (EPM), Federal University of São Paulo (UNIFESP). São Paulo, Brazil.</strong>
     </div>
 <div class="mt-1">
-<strong>Authors:</strong> Marianne Wolff Rezende Teixeira, MD (UNIFESP); Matheus de Oliveira Barros, MD (UNIFESP); Gisele Wally Braga Colleoni, MD, PhD (UNIFESP)
+<strong>Authors:</strong> Marianne Wolff Rezende Teixeira, MD (UNIFESP); Matheus de Oliveira Barros, MD (UNIFESP); Luciano Pereira Soares, PhD (Insper); Adriana Bruscato Bortoluzzo, PhD (Insper); Maysa Seabra Cendoroglo, MD, PhD (UNIFESP); Gisele Wally Braga Colleoni, MD, PhD (UNIFESP)
     </div>
 <div class="mt-1">
-<strong>Contributors:</strong> Maísa Braga Aguiar, MD (UNIFESP); Lia Alexandre Botelho de Paula, MD (UNIFESP); Luciano Pereira Soares, PhD (Insper); Adriana Bruscato Bortoluzzo, PhD (Insper); Ana Beatriz Galhardi Di Tommaso, MD, MSc (UNIFESP); Eduardo Canteiro Cruz, MD (UNIFESP); Maysa Seabra Cendoroglo, MD, PhD (UNIFESP)
+<strong>Contributors:</strong> Maísa Braga Aguiar, MD (UNIFESP); Lia Alexandre Botelho de Paula, MD (UNIFESP); Ana Beatriz Galhardi Di Tommaso, MD, MSc (UNIFESP); Eduardo Canteiro Cruz, MD (UNIFESP)
     </div>
 </div>
 </header>
@@ -67,7 +67,7 @@
 <p class="text-sm text-gray-500 mb-4">Fill the Fried Criteria or Clinical Frailty Scale (CFS). Only one method is needed to proceed.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div>
-<label class="text-sm font-medium mb-2 block">FRIED — Fried Criteria*</label>
+<label class="text-sm font-medium mb-2 block">FRIED — Fried Criteria* (Recommended for geriatricians)</label>
 <div class="space-y-2 text-sm">
 <label class="flex items-center gap-2"><input type="checkbox" x-model="fried.weightLoss"/> Unintentional weight loss ≥5% body weight in the last year</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="fried.exhaustion"/> Self-reported exhaustion/fatigue</label>
@@ -82,32 +82,55 @@
 <strong>Handgrip Strength — Cut-off points</strong><br/>
 <span class="inline-block mt-1">Women: <span class="font-semibold">&lt; 16 kgf</span></span><br/>
 <span class="inline-block">Men: <span class="font-semibold">&lt; 27 kgf</span></span>
-<div class="text-[10px] text-gray-500 mt-1">*Fried Criteria Modification: Handgrip strength measurements are not adjusted for BMI.</div>
-<div class="text-[10px] text-gray-500 mt-1">Reference: Writing Group for the European Working Group on Sarcopenia in Older People 2 (EWGSOP2), and the Extended Group for EWGSOP2. Sarcopenia: revised European consensus on definition and diagnosis. Age Ageing. 2019;48(1):16-31. doi: 10.1093/ageing/afy169. Erratum in: Age Ageing. 2019;48(4):601. doi: 10.1093/ageing/afz046. PMID: 30312372; PMCID: PMC6322506.</div>
+<div class="text-[10px] text-gray-500 mt-1">
+  *Fried Criteria Modification: Handgrip strength measurements are not adjusted for BMI.<sup><a href="#ref5">5</a></sup>
 </div>
-</div>
-<div>
-<label class="text-sm font-medium mb-2 block">CFS — Clinical Frailty Scale</label>
-<select class="border rounded w-full px-3 py-2" x-model.number="cfs">
-<option value="">Choose…</option>
-<template :key="n" x-for="n in 9">
-<option :value="n" x-text="n"></option>
-</template>
-</select>
-<div class="mt-3 p-3 bg-gray-50 border rounded text-xs leading-relaxed cursor-default" id="cfsLegendBox">
-<p class="text-xs mt-2 mb-3"><button type="button" id="openCfsLink" class="underline text-blue-700" onclick="return (window.__openCfs ? window.__openCfs() : false)">Click here for Clinical Frailty Scale</button></p>
 
-<strong>CFS:</strong><br/>
-          1 — Very Fit: robust, high energy.<br/>
-          2 — Well: no active disease, ocasionally active.<br/>
-          3 — Managing Well: medical problems are well controlled, regularly active.<br/>
-          4 — Vulnerable: not dependent, symptoms limit activities.<br/>
-          5 — Mildly Frail: more evident slowing, needs hel with IADL.<br/>
-          6 — Moderately Frail: needs help with all outside activities.<br/>
-          7 — Severely Frail: completely dependente for personal care.<br/>
-          8 — Very Severely Frail: approaching end of life.<br/>
-          9 — Terminally Ill: life expectancy &lt; 6 months
-        </div>
+</div>
+</div>
+<!-- CFS — Clinical Frailty Scale (idêntico ao modelo do FRIED) -->
+<div>
+  <label class="text-sm font-medium mb-2 block">CFS — Clinical Frailty Scale (Recommended for non-geriatricians)</label>
+<p class="text-xs mt-2 mb-3"><button type="button" id="openCfsLink" class="underline text-blue-700" onclick="return (window.__openCfs ? window.__openCfs() : false)">Click here for Clinical Frailty Scale</button></p>
+  <div class="space-y-2 text-sm">
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===1" @change="cfs = (cfs===1) ? null : 1"/>
+      1 — Very Fit: robust, high energy.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===2" @change="cfs = (cfs===2) ? null : 2"/>
+      2 — Well: no active disease, occasionally active.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===3" @change="cfs = (cfs===3) ? null : 3"/>
+      3 — Managing Well: medical problems are well controlled, regularly active.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===4" @change="cfs = (cfs===4) ? null : 4"/>
+      4 — Vulnerable: not dependent; symptoms limit activities.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===5" @change="cfs = (cfs===5) ? null : 5"/>
+      5 — Mildly Frail: more evident slowing; needs help with IADL.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===6" @change="cfs = (cfs===6) ? null : 6"/>
+      6 — Moderately Frail: needs help with all outside activities.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===7" @change="cfs = (cfs===7) ? null : 7"/>
+      7 — Severely Frail: completely dependent for personal care.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===8" @change="cfs = (cfs===8) ? null : 8"/>
+      8 — Very Severely Frail: approaching end of life.
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" :checked="cfs===9" @change="cfs = (cfs===9) ? null : 9"/>
+      9 — Terminally Ill: life expectancy &lt; 6 months.
+    </label>
+  </div>
+
 </div>
 </div>
 <div class="grid grid-cols-2 gap-3 mt-4">
@@ -150,8 +173,8 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
 <div><label class="text-xs block mb-1">BMI</label><div class="px-3 py-2 border rounded bg-gray-50 w-full" x-text="dem.bmi ? dem.bmi.toFixed(1) : '—'"></div></div><div><label class="text-xs block mb-1">Smoking</label>
 <select class="border rounded w-full px-3 py-2" x-model="dem.smoke"><option>Never</option><option>Former smoker</option><option>Current</option></select></div>
-<div><label class="text-xs block mb-1">ADL dependencies — includes needing help with dressing, bathing, eating, getting in or out of bed, and toileting (0-5)</label><input class="border rounded w-full px-3 py-2" max="5" min="0" type="number" x-model.number="dem.adl"/></div>
-<div><label class="text-xs block mb-1">IADL difficulties — includes difficulty using a telephone, preparing a meal, managing medications, managing money such as paying bills, and shopping for groceries (0-5)</label><input class="border rounded w-full px-3 py-2" max="5" min="0" type="number" x-model.number="dem.iadl"/></div>
+<div><label class="text-xs block mb-1">Activities of Daily Living (ADL) dependencies — includes needing help with dressing, bathing, eating, getting in or out of bed, and toileting (0-5)</label><input class="border rounded w-full px-3 py-2" max="5" min="0" type="number" x-model.number="dem.adl"/></div>
+<div><label class="text-xs block mb-1">Instrumental Activities of Daily Living (IADL) difficulties — includes difficulty using a telephone, preparing a meal, managing medications, managing money such as paying bills, and shopping for groceries (0-5)</label><input class="border rounded w-full px-3 py-2" max="5" min="0" type="number" x-model.number="dem.iadl"/></div>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="dem.walk"/> Difficulty walking several blocks</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="dem.vigorous"/> Participates in vigorous physical activity (running/jogging, swimming, cycling, aerobics or gym workout, tennis, or digging with a shovel)</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="dem.diabetes"/> Diabetes</label>
@@ -190,7 +213,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
 <label class="flex items-center gap-2"><input type="checkbox" x-model="lee.diabetes"/> Diabetes</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="lee.cancer"/> Cancer (excluding minor skin cancers)</label>
-<label class="flex items-center gap-2"><input type="checkbox" x-model="lee.cld"/> COPD that limits their usual activities at home</label>
+<label class="flex items-center gap-2"><input type="checkbox" x-model="lee.cld"/> Chronic Obstructive Pulmonary Disease (COPD) that limits their usual activities at home</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="lee.chf"/> Congestive heart failure</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="lee.smoker"/> Currently smokes cigarettes</label>
 <label class="flex items-center gap-2"><input type="checkbox" x-model="lee.bath"/> Difficulty with bathing or showering without help</label>
@@ -269,41 +292,60 @@
   class="list-decimal ml-6 space-y-2 text-sm leading-relaxed"
   style="text-align: justify; text-justify: inter-word; overflow-wrap: anywhere;"
 >
-<li>Bach PB. Late-Stage Cancer End Points to Speed Cancer Screening Clinical Trials—Not So Fast. <em>JAMA</em>. 2024;331(22):1894-1895. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.2024.5821">10.1001/jama.2024.5821</a>. PMID: 38583869.</li>
-<li>Brotzman LE, Zikmund-Fisher BJ. Perceived Barriers Among Clinicians and Older Adults Aged 65 and Older Regarding Use of Life Expectancy to Inform Cancer Screening: A Narrative Review and Comparison. <em>Med Care Res Rev</em>. 2023;80(4):372-385. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1177/10775587231153269">10.1177/10775587231153269</a>. PMID: 36800914; PMCID: PMC10716687.</li>
-<li>Cinar D, Tas D. Cancer in the elderly. <em>North Clin Istanb</em>. 2015;2(1):73-80. doi: <a class="text-blue-700 underline" href="https://doi.org/10.14744/nci.2015.72691">10.14744/nci.2015.72691</a>. PMID: 28058345; PMCID: PMC5175057.</li>
-<li>Cruz M, Covinsky K, Widera EW, Stijacic-Cenzer I, Lee SJ. Predicting 10-year mortality for older adults. <em>JAMA</em>. 2013;309(9):874-876. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.2013.1184">10.1001/jama.2013.1184</a>. PMID: 23462780; PMCID: PMC3760279.</li>
-<li>Cruz-Jentoft AJ, Bahat G, Bauer J, Boirie Y, Bruyère O, Cederholm T, Cooper C, Landi F, Rolland Y, Sayer AA, Schneider SM, Sieber CC, Topinkova E, Vandewoude M, Visser M, Zamboni M; Writing Group for the European Working Group on Sarcopenia in Older People 2 (EWGSOP2), and the Extended Group for EWGSOP2. Sarcopenia: revised European consensus on definition and diagnosis. <em>Age Ageing</em>. 2019;48(1):16-31. doi: <a href="https://doi.org/10.1093/ageing/afy169" rel="noopener" target="_blank">10.1093/ageing/afy169</a>. Erratum in: <em>Age Ageing</em>. 2019;48(4):601. doi: <a href="https://doi.org/10.1093/ageing/afz046" rel="noopener" target="_blank">10.1093/ageing/afz046</a>. PMID: 30312372; PMCID: PMC6322506.</li><li>Deardorff WJ, Barnes DE, Jeon SY, Boscardin WJ, Langa KM, Covinsky KE, Mitchell SL, Whitlock EL, Smith AK, Lee SJ. Development and External Validation of a Mortality Prediction Model for Community-Dwelling Older Adults With Dementia. <em>JAMA Intern Med</em>. 2022;182(11):1161-1170. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jamainternmed.2022.4326">10.1001/jamainternmed.2022.4326</a>. PMID: 36156062; PMCID: PMC9513707.</li>
-<li>Francisco PMSB, et al. Prevalência de diagnóstico e tipos de câncer em idosos: dados da Pesquisa Nacional de Saúde 2013. <em>Rev Bras Geriatr Gerontol</em>. 2020;23(2):e200023. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1590/1981-22562020023.200023">10.1590/1981-22562020023.200023</a>.</li>
-<li>Fried LP, Tangen CM, Walston J, Newman AB, Hirsch C, Gottdiener J, Seeman T, Tracy R, Kop WJ, Burke G, McBurnie MA; Cardiovascular Health Study Collaborative Research Group. Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci</em>. 2001;56(3):M146–M156. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1093/gerona/56.3.m146" target="_blank" rel="noopener">10.1093/gerona/56.3.m146</a>. PMID: 11253156.</li>
-<li>INSTITUTO NACIONAL DE CÂNCER (INCA). Estimativa 2023: incidência de câncer no Brasil. 2022. Disponível em: <a class="text-blue-700 underline" href="https://www.inca.gov.br/publicacoes/livros/estimativa-2023-incidencia-de-cancer-no-brasil">inca.gov.br</a>.</li>
-<li>INCA. Detecção precoce do câncer. 2021. Disponível em: <a class="text-blue-700 underline" href="https://www.inca.gov.br/sites/ufu.sti.inca.local/files/media/document/deteccao-precoce-do-cancer.pdf">PDF</a>.</li>
-<li>Kotwal AA, Walter LC. Cancer Screening in Older Adults: Individualized Decision-Making and Communication Strategies. <em>Med Clin North Am</em>. 2020;104(6):989-1006. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1016/j.mcna.2020.08.002">10.1016/j.mcna.2020.08.002</a>. PMCID: PMC7594102.</li>
-<li>Lee SJ, Lindquist K, Segal MR, Covinsky KE. Development and validation of a prognostic index for 4-year mortality in older adults. <em>JAMA</em>. 2006;295(7):801-808. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.295.7.801">10.1001/jama.295.7.801</a>.</li>
-<li>Lee SJ, Boscardin WJ, Kirby KA, Covinsky KE. Individualizing life expectancy estimates for older adults using the Gompertz Law of Human Mortality. <em>PLoS One</em>. 2014;9(9):e108540. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1371/journal.pone.0108540">10.1371/journal.pone.0108540</a>.</li>
-<li>Lee SJ, Boscardin WJ, Stijacic-Cenzer I, Conell-Price J, O'Brien S, Walter LC. Time lag to benefit after screening for breast and colorectal cancer: meta-analysis. <em>BMJ</em>. 2013;346:e8441. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1136/bmj.e8441">10.1136/bmj.e8441</a>.</li>
-<li>Pereira LFF, et al. Lung cancer screening in Brazil: recommendations from Brazilian societies. <em>J Bras Pneumol</em>. 2024;50(1):e20230233. doi: <a class="text-blue-700 underline" href="https://doi.org/10.36416/1806-3756/e20230233">10.36416/1806-3756/e20230233</a>. PMCID: PMC11095927.</li>
-<li>Pilleron S, Sarfati D, Janssen-Heijnen M, et al. Global cancer incidence in older adults, 2012 and 2035. <em>Int J Cancer</em>. 2019;144(1):49-58. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1002/ijc.31664">10.1002/ijc.31664</a>.</li>
-<li>Qaseem A, Harrod CS, Crandall CJ, Wilt TJ; ACP. Screening for Colorectal Cancer in Asymptomatic Average-Risk Adults: Guidance Statement. <em>Ann Intern Med</em>. 2023;176(8):1092-1100. doi: <a class="text-blue-700 underline" href="https://doi.org/10.7326/M23-0779">10.7326/M23-0779</a>.</li>
-<li>Rockwood K, Song X, MacKnight C, Bergman H, Hogan DB, McDowell I, Mitnitski A. A global clinical measure of fitness and frailty in elderly people. <em>CMAJ</em>. 2005;173(5):489–495. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1503/cmaj.050051" target="_blank" rel="noopener">10.1503/cmaj.050051</a>. PMID: 16129869; PMCID: PMC1188185.</li>
-<li>Schoenborn NL, Massare J, Park R, et al. Assessment of Clinician Decision-making on Cancer Screening Cessation in Older Adults With Limited Life Expectancy. <em>JAMA Netw Open</em>. 2020;3(6):e206772. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jamanetworkopen.2020.6772">10.1001/jamanetworkopen.2020.6772</a>.</li>
-<li>Schoenborn NL, Lee K, Pollack CE, et al. Older Adults' Views and Communication Preferences About Cancer Screening Cessation. <em>JAMA Intern Med</em>. 2017;177(8):1121-1128. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jamainternmed.2017.1778">10.1001/jamainternmed.2017.1778</a>.</li>
-<li>Schoenborn NL, Bowman TL 2nd, Cayea D, et al. Primary Care Practitioners' Views on Incorporating Long-term Prognosis. <em>JAMA Intern Med</em>. 2016;176(5):671-678. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jamainternmed.2016.0670">10.1001/jamainternmed.2016.0670</a>.</li>
-<li>Schonberg MA, Davis RB, McCarthy EP, Marcantonio ER. External validation of an index to predict up to 9-year mortality. <em>J Am Geriatr Soc</em>. 2011;59(8):1444-1451. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1111/j.1532-5415.2011.03523.x">10.1111/j.1532-5415.2011.03523.x</a>.</li>
-<li>Schonberg MA, Davis RB, McCarthy EP, Marcantonio ER. Index to predict 5-year mortality of community-dwelling adults aged 65+. <em>J Gen Intern Med</em>. 2009;24(10):1115-1122. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1007/s11606-009-1073-y">10.1007/s11606-009-1073-y</a>.</li>
-<li>Shear MD, et al. Biden Is Diagnosed With an Aggressive Form of Prostate Cancer. <em>New York Times</em>. 18 maio 2025. Disponível em: <a class="text-blue-700 underline" href="https://www.nytimes.com/2025/05/18/us/politics/biden-prostate-cancer.html">nytimes.com</a>.</li>
-<li>Smith RA, Andrews KS, Brooks D, et al. Cancer screening in the United States, 2019. <em>CA Cancer J Clin</em>. 2019;69(3):184-210. doi: <a class="text-blue-700 underline" href="https://doi.org/10.3322/caac.21557">10.3322/caac.21557</a>.</li>
-<li>SBU; SBOC; SBRT. Posicionamento sobre o rastreamento do câncer de próstata. 2023. Disponível em: <a class="text-blue-700 underline" href="https://portaldaurologia.org.br/files/arquivos/filee4e2d7e8d48f92bae5f8f445d4e71e43.pdf">portaldaurologia.org.br (PDF)</a>.</li>
-<li>Soung MC. Screening for cancer: when to stop? <em>Med Clin North Am</em>. 2015;99(2):249-262. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1016/j.mcna.2014.11.002">10.1016/j.mcna.2014.11.002</a>.</li>
-<li>Urban LABD, et al. Recomendações para o rastreamento do câncer de mama no Brasil. <em>Radiol Bras</em>. 2023;56(4):207–214. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1590/0100-3984.2023.0064">10.1590/0100-3984.2023.0064</a>.</li>
-<li>USPSTF. Screening for Breast Cancer: Recommendation Statement. <em>JAMA</em>. 2024;331(22):1918-1930. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.2024.5534">10.1001/jama.2024.5534</a>.</li>
-<li>USPSTF. Screening for Colorectal Cancer: Recommendation Statement. <em>JAMA</em>. 2021;325(10):1965-1977. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.2021.6238">10.1001/jama.2021.6238</a>.</li>
-<li>USPSTF. Screening for Lung Cancer: Recommendation Statement. <em>JAMA</em>. 2021;325(10):962-970. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.2021.1117">10.1001/jama.2021.1117</a>.</li>
-<li>USPSTF. Screening for Prostate Cancer: Recommendation Statement. <em>JAMA</em>. 2018;319(18):1901-1913. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.2018.3710">10.1001/jama.2018.3710</a>.</li>
-<li>Vieira L, et al. Cancer no idoso: reflexões sobre o ônus da idade. <em>Arq Catarinenses Med</em>. 2022;50(3):123–132. doi: <a class="text-blue-700 underline" href="https://doi.org/10.63845/xk6p4574">10.63845/xk6p4574</a>.</li>
-<li>Walter LC, Covinsky KE. Cancer screening in elderly patients: a framework for individualized decision making. <em>JAMA</em>. 2001;285(21):2750-2756. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1001/jama.285.21.2750">10.1001/jama.285.21.2750</a>.</li>
-<li>Xu J, Liao J, Yan Q, et al. Trends analysis of cancer incidence, mortality, and survival for the elderly in the United States, 1975–2020. <em>Cancer Med</em>. 2024;13(15):e70062. doi: <a class="text-blue-700 underline" href="https://doi.org/10.1002/cam4.70062">10.1002/cam4.70062</a>.</li>
-<li>Zhang Y, et al. What Should I Know About Stopping Routine Cancer Screening? <em>JAMA Intern Med</em>. 2023. Disponível em: <a class="text-blue-700 underline" href="https://jamanetwork.com/journals/jamainternmedicine/fullarticle/2802346">jamanetwork.com</a>.</li>
+<li id="ref1">
+      Cruz M, Covinsky K, Widera EW, Stijacic-Cenzer I, Lee SJ. Predicting 10-year mortality for older adults. <em>JAMA</em>. 2013;309(9):874-876.
+      doi: <a href="https://doi.org/10.1001/jama.2013.1184" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1001/jama.2013.1184</a>.
+      PMID: 23462780; PMCID: PMC3760279.
+    </li>
+    <li id="ref2">
+      Cruz-Jentoft AJ, Bahat G, Bauer J, Boirie Y, Bruyère O, Cederholm T, et&nbsp;al.; Writing Group for the European Working Group on Sarcopenia in Older People 2 (EWGSOP2), and the Extended Group for EWGSOP2.
+      Sarcopenia: revised European consensus on definition and diagnosis. <em>Age Ageing</em>. 2019;48(4):601 (Erratum to: 2019;48(1):16-31).
+      doi: <a href="https://doi.org/10.1093/ageing/afz046" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1093/ageing/afz046</a>.
+      PMID: 31081853; PMCID: PMC6593317.
+    </li>
+    <li id="ref3">
+      Deardorff WJ, Barnes DE, Jeon SY, Boscardin WJ, Langa KM, Covinsky KE, et&nbsp;al.
+      Development and External Validation of a Mortality Prediction Model for Community-Dwelling Older Adults With Dementia. <em>JAMA Intern Med</em>. 2022;182(11):1161-1170.
+      doi: <a href="https://doi.org/10.1001/jamainternmed.2022.4326" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1001/jamainternmed.2022.4326</a>.
+      PMID: 36156062; PMCID: PMC9513707.
+    </li>
+    <li id="ref4">
+      Fried LP, Tangen CM, Walston J, Newman AB, Hirsch C, Gottdiener J, et&nbsp;al.; Cardiovascular Health Study Collaborative Research Group.
+      Frailty in older adults: evidence for a phenotype. <em>J Gerontol A Biol Sci Med Sci</em>. 2001;56(3):M146-M156.
+      doi: <a href="https://doi.org/10.1093/gerona/56.3.m146" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1093/gerona/56.3.m146</a>. PMID: 11253156.
+    </li>
+    <li id="ref5">
+      Kim DH, Rockwood K. Frailty in Older Adults. <em>N Engl J Med</em>. 2024;391(6):538-548.
+      doi: <a href="https://doi.org/10.1056/NEJMra2301292" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1056/NEJMra2301292</a>. PMID: 39115063; PMCID: PMC11634188.
+    </li>
+    <li id="ref6">
+      Kim EE, Cenzer I, Graham FJ, Kang J, Lee SJ, Rustagi AS.
+      Time to Benefit for Lung Cancer Screening: A Systematic Review and Survival Meta-Analysis. <em>Am J Prev Med</em>. 2025;69(2):107736.
+      doi: <a href="https://doi.org/10.1016/j.amepre.2025.107736" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1016/j.amepre.2025.107736</a>. PMID: 40447235; PMCID: PMC12370011.
+    </li>
+    <li id="ref7">
+      Kotwal AA, Walter LC. Cancer Screening in Older Adults: Individualized Decision-Making and Communication Strategies. <em>Med Clin North Am</em>. 2020;104(6):989-1006.
+      doi: <a href="https://doi.org/10.1016/j.mcna.2020.08.002" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1016/j.mcna.2020.08.002</a>. PMID: 33099456; PMCID: PMC7594102.
+    </li>
+    <li id="ref8">
+      Lee SJ, Boscardin WJ, Kirby KA, Covinsky KE.
+      Individualizing life expectancy estimates for older adults using the Gompertz Law of Human Mortality. <em>PLoS One</em>. 2014;9(9):e108540.
+      doi: <a href="https://doi.org/10.1371/journal.pone.0108540" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1371/journal.pone.0108540</a>. PMID: 25265291; PMCID: PMC4180452.
+    </li>
+    <li id="ref9">
+      Lee SJ, Boscardin WJ, Stijacic-Cenzer I, Conell-Price J, O'Brien S, Walter LC.
+      Time lag to benefit after screening for breast and colorectal cancer: meta-analysis of survival data from the United States, Sweden, United Kingdom, and Denmark. <em>BMJ</em>. 2013;346:e8441.
+      doi: <a href="https://doi.org/10.1136/bmj.e8441" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1136/bmj.e8441</a>. PMID: 23299842; PMCID: PMC4688425.
+    </li>
+    <li id="ref10">
+      Rockwood K, Song X, MacKnight C, Bergman H, Hogan DB, McDowell I, Mitnitski A.
+      A global clinical measure of fitness and frailty in elderly people. <em>CMAJ</em>. 2005;173(5):489-495.
+      doi: <a href="https://doi.org/10.1503/cmaj.050051" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.1503/cmaj.050051</a>. PMID: 16129869; PMCID: PMC1188185.
+    </li>
+    <li id="ref11">
+      Rockwood K, Theou O. Using the Clinical Frailty Scale in Allocating Scarce Health Care Resources. <em>Can Geriatr J</em>. 2020;23(3):210-215.
+      doi: <a href="https://doi.org/10.5770/cgj.23.463" class="text-blue-700 underline hover:text-blue-900" target="_blank">10.5770/cgj.23.463</a>. PMID: 32904824; PMCID: PMC7458601.
+    </li>
 </ol>
 </div>
 </details>
@@ -325,7 +367,7 @@
               this.dem.bmi = null;
               this.dem.walk = false; this.dem.vigorous = false; this.dem.r10 = null; this.dem.adl = 0;
               this.dem.iadl = 0;
-              this.dem.smoke = 'Nunca';
+              this.dem.smoke = 'Never';
               this.dem.diabetes = false;
               this.dem.heart = false;
               this.dem.cancer = false;
@@ -454,9 +496,9 @@
         applyLeeToFlow(){ const p=this.calcLeePoints(); const r=this.leeRisk10(p); this.lee.points=p; this.lee.r10=r; this.mortalityHigh = (r>=0.50); this.step = this.mortalityHigh?5:4; },
 
         // Deardorff (demência)
-        dem: { age:'65-69', sex:'F', wkg:null, hcm:null, bmi:null, walk:false, vigorous:false, adl:0, iadl:0, smoke:'Nunca', diabetes:false, heart:false, cancer:false, lung:false, r1:null, r2:null, r5:null, r10:null },
+        dem: { age:'65-69', sex:'F', wkg:null, hcm:null, bmi:null, walk:false, vigorous:false, adl:0, iadl:0, smoke:'Never', diabetes:false, heart:false, cancer:false, lung:false, r1:null, r2:null, r5:null, r10:null },
         updateDemBMI(){ if(this.dem.wkg && this.dem.hcm){ const h=this.dem.hcm/100; this.dem.bmi=this.dem.wkg/(h*h);} else { this.dem.bmi=null; } },
-        demLP(){ let lp=0; const age={'65-69':0,'70-74':0.32,'75-79':0.66,'80-84':0.97,'85-89':1.20,'90+':1.47}[this.dem.age]??0; lp+=age; if(this.dem.sex==='F')lp+=(-0.34); const bmi=this.dem.bmi; if(bmi!==null){ if(bmi<18.5)lp+=0.44; else if(bmi>=25 && bmi<30)lp+=(-0.16); else if(bmi>=30)lp+=(-0.28);} lp+=({'Nunca':0,'Former smoker':0.17,'Atual':0.32}[this.dem.smoke]??0); lp+=0.14*(Number(this.dem.adl)||0); lp+=0.10*(Number(this.dem.iadl)||0); if(this.dem.walk)lp+=0.09; if(this.dem.vigorous)lp+=(-0.13); if(this.dem.diabetes)lp+=0.22; if(this.dem.heart)lp+=0.22; if(this.dem.cancer)lp+=0.21; if(this.dem.lung)lp+=0.30; return lp; },
+        demLP(){ let lp=0; const age={'65-69':0,'70-74':0.32,'75-79':0.66,'80-84':0.97,'85-89':1.20,'90+':1.47}[this.dem.age]??0; lp+=age; if(this.dem.sex==='F')lp+=(-0.34); const bmi=this.dem.bmi; if(bmi!==null){ if(bmi<18.5)lp+=0.44; else if(bmi>=25 && bmi<30)lp+=(-0.16); else if(bmi>=30)lp+=(-0.28);} lp+=({'Nunca':0,'Former smoker':0.17,'Current':0.32}[this.dem.smoke]??0); lp+=0.14*(Number(this.dem.adl)||0); lp+=0.10*(Number(this.dem.iadl)||0); if(this.dem.walk)lp+=0.09; if(this.dem.vigorous)lp+=(-0.13); if(this.dem.diabetes)lp+=0.22; if(this.dem.heart)lp+=0.22; if(this.dem.cancer)lp+=0.21; if(this.dem.lung)lp+=0.30; return lp; },
         demRisk(t){ const S0={1:0.9716,2:0.9338,5:0.8001,10:0.5369}[t]; if(!S0)return null; const surv=Math.pow(S0, Math.exp(this.demLP())); return 1-surv; },
         applyDemToFlow(){ const r10=this.demRisk(10); this.dem.r10=r10; this.mortalityHigh = (r10!==null && r10>=0.50); this.step = this.mortalityHigh?5:4; },
 
@@ -674,19 +716,4 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
