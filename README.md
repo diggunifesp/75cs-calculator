@@ -3,7 +3,7 @@
 Ferramenta web estática para apoiar o rastreio de fragilidade e a estimativa de risco (Lee / Deardorff), com fluxo de decisão e materiais educativos.
 
 # Site (GitHub Pages)
-Produção: https://bit.ly/75cs-calculator / https://matthurricane.github.io/75cs-calculator
+Produção: https://diggunifesp.github.io/75cs-calculator
 
 # Estrutura
 
