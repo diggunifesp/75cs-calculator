@@ -273,8 +273,12 @@
 <p class="text-xs mt-2 text-gray-600" x-show="result.label === 'Screening not recommended'">Interventions (pharmacological and non-pharmacological therapies) can be implemented and change this decision.</p>
 <div class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded"
      x-show="['Screening not recommended','Screening recommended'].includes(result.label)">
-<p class="text-xs text-blue-800 mb-2 font-medium">Intervention examples:</p>
-<div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 items-start justify-items-center text-center">
+<p class="text-xs text-blue-800 font-medium">
+  Intervention examples:
+</p>
+<p class="text-[11px] text-blue-700/80 mb-3 leading-snug">
+  ©2025 American College of Lifestyle Medicine. All rights reserved. lifestylemedicine.org
+</p><div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 items-start justify-items-center text-center">
 
   <!-- Connectedness -->
   <div class="flex flex-col items-center gap-2">
@@ -786,6 +790,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
+
 
 
 
