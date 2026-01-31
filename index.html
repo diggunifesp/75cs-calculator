@@ -1026,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 (function () {
   const BASE = window.__COUNTER_BASE__;
-  const CALC_ID = "75cs"; // namespace for this calculator
+  const CALC_ID = "75cs"; // namespacing for this calculator
   if (!BASE) return;
 
   function withCalc(path) {
@@ -1036,24 +1036,28 @@ document.addEventListener('DOMContentLoaded', function(){
 
   async function refresh() {
     try {
-      const r = await fetch(withCalc("/v1/stats"), { cache: "no-store" });
+      const r = await fetch(withCalc("/get"), { cache: "no-store" });
       if (!r.ok) return;
       const d = await r.json();
-      document.getElementById("cnt-visits").textContent = d.visits ?? "–";
-      document.getElementById("cnt-completions").textContent = d.completions ?? "–";
-      document.getElementById("site-counters").style.display = "block";
+      const v = (d && (d.visits ?? d.count ?? d.value)) ?? "–";
+      const c = (d && (d.completions ?? d.completed ?? d.completion)) ?? "–";
+      const elV = document.getElementById("cnt-visits");
+      const elC = document.getElementById("cnt-completions");
+      if (elV) elV.textContent = v;
+      if (elC) elC.textContent = c;
+      const badge = document.getElementById("site-counters");
+      if (badge) badge.style.display = "block";
     } catch {}
   }
 
-  // count visit once per tab (per calculator)
+  // count visit once per tab (namespaced)
   const VISIT_KEY = "visit_counted_" + CALC_ID + "_v1";
   if (!sessionStorage.getItem(VISIT_KEY)) {
     sessionStorage.setItem(VISIT_KEY, "1");
-    // Worker expects GET (same as Lung)
-    fetch(withCalc("/v1/visit"), { method: "GET", cache: "no-store" }).catch(() => {});
+    fetch(withCalc("/visit"), { method: "GET", cache: "no-store" }).catch(() => {});
   }
 
-  // expose completion hook (debounced)
+  // completion hook (debounced)
   window.__countFlowchartCompletion__ = function () {
     const now = Date.now();
     const LAST_KEY = "flow_last_completion_ts_" + CALC_ID + "_v1";
@@ -1061,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if (now - last < 2500) return;
     sessionStorage.setItem(LAST_KEY, String(now));
 
-    fetch(withCalc("/v1/complete"), { method: "GET", cache: "no-store" }).catch(() => {});
+    fetch(withCalc("/complete"), { method: "GET", cache: "no-store" }).catch(() => {});
     refresh();
   };
 
