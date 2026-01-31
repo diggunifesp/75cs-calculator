@@ -88,7 +88,11 @@
   img.app-scale-down { max-height: 220px !important; object-fit: contain !important; }
   img.app-flowchart { max-height: 320px !important; object-fit: contain !important; }
 
-  details.app-collapsible {
+  
+
+  /* Hide the small "status pills/cards" row under the flowchart image in app mode */
+  div.text-xs.flex.gap-2.items-center.no-print.mt-2 { display: none !important; }
+details.app-collapsible {
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 12px;
     padding: 10px 12px;
@@ -125,6 +129,10 @@ body.app-standalone img { max-width: 100% !important; height: auto !important; }
 body.app-standalone img.app-scale-down { max-height: 220px !important; object-fit: contain !important; }
 body.app-standalone img.app-flowchart { max-height: 320px !important; object-fit: contain !important; }
 
+
+
+  /* Hide the small "status pills/cards" row under the flowchart image in app mode */
+  body.app-standalone div.text-xs.flex.gap-2.items-center.no-print.mt-2 { display: none !important; }
 body.app-standalone details.app-collapsible {
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 12px;
@@ -146,6 +154,55 @@ body.app-standalone details.app-collapsible .app-muted {
 }
 </style>
 <!-- APP-ONLY STYLES END -->
+<!-- ===================== -->
+
+
+<!-- ===================== -->
+<!-- INSTALL-PROMPT (mobile browser only) BEGIN -->
+<style id="install-prompt-styles">
+  .install-prompt {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9998;
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    padding: 10px 12px;
+    font: 13px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    color: rgba(0,0,0,0.75);
+    display: none;
+  }
+  .install-prompt .row { display:flex; align-items:center; gap:10px; }
+  .install-prompt .txt { flex: 1; line-height: 1.25; }
+  .install-prompt .btn {
+    border: 1px solid rgba(0,0,0,0.12);
+    background: rgba(0,0,0,0.04);
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .install-prompt .btn.primary {
+    background: rgba(37, 99, 235, 0.10);
+    border-color: rgba(37, 99, 235, 0.25);
+  }
+  .install-prompt .btn:active { transform: translateY(1px); }
+  .install-prompt .hint {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(0,0,0,0.55);
+    display:none;
+  }
+  .install-prompt .hint b { font-weight: 700; }
+  @media (min-width: 900px) {
+    /* don't show on large desktop */
+    .install-prompt { left: auto; right: 14px; max-width: 420px; }
+  }
+</style>
+<!-- INSTALL-PROMPT END -->
 <!-- ===================== -->
 
 </head>
@@ -1092,6 +1149,64 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 </script>
 <!-- === APP-ONLY ENHANCEMENTS END === -->
+
+
+<script>
+(function(){
+  const DISMISS_KEY = "install_prompt_dismissed_v1";
+
+  function isStandalone() {
+    const dm = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+    const ios = (typeof navigator !== "undefined" && navigator.standalone === true);
+    return !!(dm || ios);
+  }
+
+  function isMobileish() {
+    return (window.innerWidth <= 820) || ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+  }
+
+  if (isStandalone()) return;
+  if (!isMobileish()) return;
+  if (localStorage.getItem(DISMISS_KEY) === "1") return;
+
+  // Create prompt
+  const el = document.createElement("div");
+  el.className = "install-prompt";
+  el.innerHTML = `
+    <div class="row">
+      <div class="txt">Tip: install this as an app for a cleaner, less cluttered experience.</div>
+      <button class="btn primary" type="button" id="ip-how">How</button>
+      <button class="btn" type="button" id="ip-x">✕</button>
+    </div>
+    <div class="hint" id="ip-hint"></div>
+  `;
+  document.body.appendChild(el);
+
+  const hint = el.querySelector("#ip-hint");
+  const ua = navigator.userAgent || "";
+
+  function showHint() {
+    // iOS Safari
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const isSafari = isIOS && /Safari/i.test(ua) && !/CriOS|FxiOS/i.test(ua);
+    if (isSafari) {
+      hint.innerHTML = `On iPhone: tap <b>Share</b> (square + arrow) → <b>Add to Home Screen</b>. Then open from the icon.`;
+    } else {
+      hint.innerHTML = `On Android: menu (⋮) → <b>Add to Home screen</b> / <b>Install app</b>. Then open from the icon.`;
+    }
+    hint.style.display = "block";
+  }
+
+  el.querySelector("#ip-how").addEventListener("click", showHint);
+  el.querySelector("#ip-x").addEventListener("click", () => {
+    localStorage.setItem(DISMISS_KEY, "1");
+    el.remove();
+  });
+
+  // show after a short delay so it doesn't flash during load
+  setTimeout(() => { el.style.display = "block"; }, 800);
+})();
+</script>
 
 </body>
 </html>
