@@ -19,8 +19,151 @@
   body { background: #fff !important; color: #000 !important; }
   a:link::after { content: " (" attr(href) ")"; font-size: 10px; }
 }
-</style></head>
-<body class="bg-gray-50 min-h-screen text-gray-800" x-data="fluxograma()"><a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-white border rounded px-3 py-2" href="#main">Skip to content</a><main id="main">
+</style>
+
+<!-- ===================== -->
+<!-- PRINT-ONLY STYLES BEGIN -->
+<style id="print-only-styles">
+@media print {
+  /* Hide UI extras */
+  #site-counters { display: none !important; }
+  button { display: none !important; }
+  details, summary { display: none !important; } /* References */
+
+  /* Hide authors block */
+  div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed { display: none !important; }
+
+  /* Remove the subtitle sentence that gets cut */
+  div.mt-2.text-center.text-gray-500.text-sm.md\:text-base.font-medium.italic { display: none !important; }
+
+  /* Remove the "Advice" box only */
+  div.mt-2.p-2.bg-gray-50.border.rounded.text-\[11px\].md\:text-xs.text-gray-700.leading-relaxed {
+    display: none !important;
+  }
+
+  /* Start from a clean slate */
+  body { background: #fff !important; }
+  body * { visibility: hidden; }
+
+  /* Show title + two subtitle lines (excluding authors and the italic sentence above) */
+  h1, h1 + div, h1 + div + div { visibility: visible; }
+  h1 *, h1 + div *, h1 + div + div * { visibility: visible; }
+
+  /* Show final result card (Step 5) */
+  [\:class="resultTone.bg"] {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 120px;
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+  [\:class="resultTone.bg"] * { visibility: visible; }
+}
+</style>
+<!-- PRINT-ONLY STYLES END -->
+<!-- ===================== -->
+
+
+<!-- ===================== -->
+<!-- APP-ONLY STYLES BEGIN -->
+<style id="app-only-styles">
+/* Only when installed/opened as an app (PWA standalone). Desktop + normal mobile browser unchanged. */
+@media (display-mode: standalone) {
+  /* Reduce perceived clutter/spacing */
+  .p-6 { padding: 14px !important; }
+  .p-4 { padding: 12px !important; }
+  .mt-6 { margin-top: 12px !important; }
+  .mt-8 { margin-top: 14px !important; }
+
+  /* Titles: slightly smaller on app view */
+  h1 { font-size: 20px !important; line-height: 1.2 !important; }
+  h2 { font-size: 16px !important; line-height: 1.25 !important; }
+
+  /* Hide the original authors/collaborators line (we will re-insert as a collapsible section via JS) */
+  div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed {
+    display: none !important;
+  }
+
+  /* Images: generally smaller in app view */
+  img { max-width: 100% !important; height: auto !important; }
+  img.app-scale-down { max-height: 220px !important; object-fit: contain !important; }
+  img.app-flowchart { max-height: 320px !important; object-fit: contain !important; }
+
+  /* Collapsible look */
+  details.app-collapsible {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.7);
+  }
+  details.app-collapsible > summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: rgba(0,0,0,0.70);
+    list-style: none;
+  }
+  details.app-collapsible > summary::-webkit-details-marker { display: none; }
+  details.app-collapsible .app-muted {
+    color: rgba(0,0,0,0.55);
+    font-size: 12px;
+    line-height: 1.35;
+    margin-top: 8px;
+  }
+}
+
+/* Desktop preview: add ?app=1 to URL to simulate the app styling */
+body.app-preview .p-6 { padding: 14px !important; }
+body.app-preview .p-4 { padding: 12px !important; }
+body.app-preview .mt-6 { margin-top: 12px !important; }
+body.app-preview .mt-8 { margin-top: 14px !important; }
+
+body.app-preview h1 { font-size: 20px !important; line-height: 1.2 !important; }
+body.app-preview h2 { font-size: 16px !important; line-height: 1.25 !important; }
+
+body.app-preview div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed { display: none !important; }
+
+body.app-preview img { max-width: 100% !important; height: auto !important; }
+body.app-preview img.app-scale-down { max-height: 220px !important; object-fit: contain !important; }
+body.app-preview img.app-flowchart { max-height: 320px !important; object-fit: contain !important; }
+
+body.app-preview details.app-collapsible {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.7);
+}
+body.app-preview details.app-collapsible > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: rgba(0,0,0,0.70);
+  list-style: none;
+}
+body.app-preview details.app-collapsible > summary::-webkit-details-marker { display: none; }
+body.app-preview details.app-collapsible .app-muted {
+  color: rgba(0,0,0,0.55);
+  font-size: 12px;
+  line-height: 1.35;
+  margin-top: 8px;
+}
+</style>
+<!-- APP-ONLY STYLES END -->
+<!-- ===================== -->
+
+</head>
+<body class="bg-gray-50 min-h-screen text-gray-800" x-data="fluxograma()">
+
+<script>
+(function(){
+  try{
+    const u = new URL(window.location.href);
+    const on = (u.searchParams.get("app") === "1") || (u.hash && u.hash.includes("app=1"));
+    if(on) document.body.classList.add("app-preview");
+  }catch{}
+})();
+</script>
+<a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-white border rounded px-3 py-2" href="#main">Skip to content</a><main id="main">
 <div class="max-w-6xl mx-auto px-4 py-6">
 <header class="mb-6">
 <h1 class="text-2xl font-bold text-center uppercase text-blue-700">
@@ -339,7 +482,8 @@
 </div>
 <hr class="my-3"/>
 <div class="text-xs space-y-1">
-<p>CFS: <span x-text="cfs || '—'"></span></p>
+<p x-show="friedCount === 0">CFS: <span x-text="cfs || \'—\'"></span></p>
+<p x-show="friedCount > 0">FRIED: <span x-text="friedCount + '/5 — ' + frailtyClass"></span></p>
 <p>Dementia: <span x-text="format(hasDementia)"></span></p>
 <p x-show="lee.r10 !== null || dem.r10 !== null">10-year mortality risk: <span x-show="lee.r10 !== null">Lee <span class="font-medium" x-text="fmtPct(lee.r10)"></span></span><span x-show="lee.r10 !== null &amp;&amp; dem.r10 !== null"> | </span><span x-show="dem.r10 !== null">Deardorff <span class="font-medium" x-text="fmtPct(dem.r10)"></span></span></p>
 <p>Consent: <span x-text="format(consent)"></span></p>
@@ -582,7 +726,7 @@
         // Resultado & helpers
         get result(){
           // 1) Fragilidade bloqueia
-          if (this.blockByFrailty) return { label: 'Screening not recommended', tone: 'danger', reason: 'Very Severely Frail: CSF 8–9.' };
+          if (this.blockByFrailty) return { label: 'Screening not recommended', tone: 'danger', reason: 'Very Severely Frail: CFS 8–9.' };
           // 2) Risco alto bloqueia
           if (this.mortalityHigh === true) return { label: 'Screening not recommended', tone: 'danger', reason: '10-year mortality risk ≥50%.' };
           // 3) Risco <50% passa por Shared decision-making
@@ -788,9 +932,171 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 </script>
 
+
+<!-- === DISCRETE GLOBAL COUNTERS (Visits / Completions) === -->
+<script>
+  // Cloudflare Worker base URL
+  window.__COUNTER_BASE__ = "https://75cs-counters.matheus-barros-md.workers.dev";
+</script>
+
+<div id="site-counters" style="
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  font: 12px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color: rgba(0,0,0,.55);
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(0,0,0,.08);
+  padding: 6px 8px;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: none;
+">
+  <span>Visits <span id="cnt-visits">–</span></span>
+  <span style="margin-left:10px">Completions <span id="cnt-completions">–</span></span>
+</div>
+
+<script>
+(function () {
+  const BASE = window.__COUNTER_BASE__;
+  if (!BASE) return;
+
+  async function refresh() {
+    try {
+      const r = await fetch(BASE + "/v1/stats");
+      if (!r.ok) return;
+      const d = await r.json();
+      document.getElementById("cnt-visits").textContent = d.visits ?? "–";
+      document.getElementById("cnt-completions").textContent = d.completions ?? "–";
+      document.getElementById("site-counters").style.display = "block";
+    } catch {}
+  }
+
+  // count visit once per tab
+  if (!sessionStorage.getItem("visit_counted_v1")) {
+    sessionStorage.setItem("visit_counted_v1", "1");
+    fetch(BASE + "/v1/visit", { method: "POST" }).catch(() => {});
+  }
+
+  // expose completion hook
+  window.__countFlowchartCompletion__ = function () {
+    // Allow multiple completions per tab, but debounce to prevent double-counting due to re-renders
+    const now = Date.now();
+    const last = Number(sessionStorage.getItem("flow_last_completion_ts_v1") || 0);
+    if (now - last < 2500) return; // 2.5s debounce
+    sessionStorage.setItem("flow_last_completion_ts_v1", String(now));
+
+    fetch(BASE + "/v1/complete", { method: "POST" }).catch(() => {});
+    refresh();
+  };
+
+  refresh();
+})();
+</script>
+<!-- === /DISCRETE GLOBAL COUNTERS === -->
+
+<!-- === AUTO-DETECT COMPLETION (Step 5) WITHOUT TOUCHING CORE LOGIC === -->
+<script>
+(function () {
+  const root = document.querySelector('[x-data="fluxograma()"]') || document.querySelector('[x-data]');
+  if (!root) return;
+
+  function getData() {
+    try {
+      if (window.Alpine && typeof window.Alpine.$data === "function") {
+        return window.Alpine.$data(root);
+      }
+      if (root.__x && root.__x.$data) return root.__x.$data;
+      if (root._x_dataStack && root._x_dataStack.length) return root._x_dataStack[0];
+    } catch {}
+    return null;
+  }
+
+  let lastStep = null;
+  let armed = true; // re-arm once user leaves step 5
+
+  const timer = setInterval(() => {
+    const data = getData();
+    if (!data) return;
+
+    const stepRaw = data.step;
+    const step = typeof stepRaw === "number" ? stepRaw : Number(stepRaw);
+    if (!Number.isFinite(step)) return;
+
+    // If user is not on step 5, we re-arm so the next entry into step 5 will count.
+    if (step !== 5) armed = true;
+
+    // Count on transitions into step 5 (from any non-5 step)
+    if (step === 5 && lastStep !== 5 && armed) {
+      armed = false;
+      if (typeof window.__countFlowchartCompletion__ === "function") {
+        window.__countFlowchartCompletion__();
+      }
+    }
+
+    lastStep = step;
+  }, 250);
+
+  setTimeout(() => clearInterval(timer), 30 * 60 * 1000);
+})();
+</script>
+<!-- === /AUTO-DETECT COMPLETION === -->
+
+<!-- === APP-ONLY ENHANCEMENTS BEGIN === -->
+<script>
+(function () {
+  const isStandalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || document.body.classList.contains("app-preview");
+  if (!isStandalone) return;
+
+  // Collapse authors/collaborators into a <details>
+  const authors = document.querySelector("div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed");
+  const title = document.querySelector("h1");
+  if (authors && title) {
+    const details = document.createElement("details");
+    details.className = "app-collapsible";
+    const summary = document.createElement("summary");
+    summary.textContent = "Authors & collaborators";
+    details.appendChild(summary);
+
+    const body = document.createElement("div");
+    body.className = "app-muted";
+    body.innerHTML = authors.innerHTML;
+    details.appendChild(body);
+
+    const after = title.nextElementSibling && title.nextElementSibling.nextElementSibling
+      ? title.nextElementSibling.nextElementSibling
+      : title;
+    after.parentNode.insertBefore(details, after.nextSibling);
+  }
+
+  // Make the flowchart image collapsible (wrap the image itself)
+  const flowImg = document.querySelector("img[src*='flow'], img[alt*='Flow'], img[alt*='flow']");
+  if (flowImg && !flowImg.closest("details.app-collapsible")) {
+    flowImg.classList.add("app-flowchart");
+    const details = document.createElement("details");
+    details.className = "app-collapsible";
+    const summary = document.createElement("summary");
+    summary.textContent = "Show flowchart";
+    details.appendChild(summary);
+
+    const parent = flowImg.parentNode;
+    parent.insertBefore(details, flowImg);
+    details.appendChild(flowImg);
+  }
+
+  // Scale down other images (e.g., ACLM) in app view
+  document.querySelectorAll("img").forEach(img => {
+    if (!img.classList.contains("app-flowchart")) {
+      img.classList.add("app-scale-down");
+    }
+  });
+})();
+</script>
+<!-- === APP-ONLY ENHANCEMENTS END === -->
+
 </body>
 </html>
-
 
 
 
