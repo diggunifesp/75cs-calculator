@@ -1026,34 +1026,46 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 (function () {
   const BASE = window.__COUNTER_BASE__;
+  const CALC_ID = "75cs"; // IMPORTANT: namespacing for this calculator
   if (!BASE) return;
+
+  function withCalc(path) {
+    const sep = path.includes("?") ? "&" : "?";
+    return BASE.replace(/\/$/, "") + path + sep + "calc=" + encodeURIComponent(CALC_ID);
+  }
 
   async function refresh() {
     try {
-      const r = await fetch(BASE + "/v1/stats");
+      const r = await fetch(withCalc("/v1/stats"), { cache: "no-store" });
       if (!r.ok) return;
       const d = await r.json();
-      document.getElementById("cnt-visits").textContent = d.visits ?? "–";
-      document.getElementById("cnt-completions").textContent = d.completions ?? "–";
-      document.getElementById("site-counters").style.display = "block";
+      const v = (d && (d.visits ?? d.count ?? d.value)) ?? "–";
+      const c = (d && (d.completions ?? d.completed ?? d.completion ?? d.count2)) ?? "–";
+      const elV = document.getElementById("cnt-visits");
+      const elC = document.getElementById("cnt-completions");
+      if (elV) elV.textContent = v;
+      if (elC) elC.textContent = c;
+      const badge = document.getElementById("site-counters");
+      if (badge) badge.style.display = "block";
     } catch {}
   }
 
-  // count visit once per tab
-  if (!sessionStorage.getItem("visit_counted_v1")) {
-    sessionStorage.setItem("visit_counted_v1", "1");
-    fetch(BASE + "/v1/visit", { method: "POST" }).catch(() => {});
+  // count visit once per tab (namespaced per calculator)
+  const VISIT_KEY = "visit_counted_" + CALC_ID + "_v1";
+  if (!sessionStorage.getItem(VISIT_KEY)) {
+    sessionStorage.setItem(VISIT_KEY, "1");
+    fetch(withCalc("/v1/visit"), { method: "POST" }).catch(() => {});
   }
 
-  // expose completion hook
+  // expose completion hook (namespaced debounce)
   window.__countFlowchartCompletion__ = function () {
-    // Allow multiple completions per tab, but debounce to prevent double-counting due to re-renders
     const now = Date.now();
-    const last = Number(sessionStorage.getItem("flow_last_completion_ts_v1") || 0);
+    const LAST_KEY = "flow_last_completion_ts_" + CALC_ID + "_v1";
+    const last = Number(sessionStorage.getItem(LAST_KEY) || 0);
     if (now - last < 2500) return; // 2.5s debounce
-    sessionStorage.setItem("flow_last_completion_ts_v1", String(now));
+    sessionStorage.setItem(LAST_KEY, String(now));
 
-    fetch(BASE + "/v1/complete", { method: "POST" }).catch(() => {});
+    fetch(withCalc("/v1/complete"), { method: "POST" }).catch(() => {});
     refresh();
   };
 
@@ -1222,7 +1234,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
-
 
 
 
