@@ -69,29 +69,25 @@
 <!-- ===================== -->
 <!-- APP-ONLY STYLES BEGIN -->
 <style id="app-only-styles">
-/* Only when installed/opened as an app (PWA standalone). Desktop + normal mobile browser unchanged. */
+/* Only when installed/opened as an app (PWA standalone) OR iOS Add-to-Home-Screen.
+   Desktop + normal mobile browser unchanged. */
 @media (display-mode: standalone) {
-  /* Reduce perceived clutter/spacing */
   .p-6 { padding: 14px !important; }
   .p-4 { padding: 12px !important; }
   .mt-6 { margin-top: 12px !important; }
   .mt-8 { margin-top: 14px !important; }
 
-  /* Titles: slightly smaller on app view */
   h1 { font-size: 20px !important; line-height: 1.2 !important; }
   h2 { font-size: 16px !important; line-height: 1.25 !important; }
 
-  /* Hide the original authors/collaborators line (we will re-insert as a collapsible section via JS) */
-  div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed {
-    display: none !important;
-  }
+  /* Hide the original authors/collaborators line (we re-insert as collapsible via JS) */
+  div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed { display: none !important; }
 
-  /* Images: generally smaller in app view */
+  /* Images scale down in app */
   img { max-width: 100% !important; height: auto !important; }
   img.app-scale-down { max-height: 220px !important; object-fit: contain !important; }
   img.app-flowchart { max-height: 320px !important; object-fit: contain !important; }
 
-  /* Collapsible look */
   details.app-collapsible {
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 12px;
@@ -113,42 +109,8 @@
   }
 }
 
-/* Desktop preview: add ?app=1 to URL to simulate the app styling */
-body.app-preview .p-6 { padding: 14px !important; }
-body.app-preview .p-4 { padding: 12px !important; }
-body.app-preview .mt-6 { margin-top: 12px !important; }
-body.app-preview .mt-8 { margin-top: 14px !important; }
-
-body.app-preview h1 { font-size: 20px !important; line-height: 1.2 !important; }
-body.app-preview h2 { font-size: 16px !important; line-height: 1.25 !important; }
-
-body.app-preview div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed { display: none !important; }
-
-body.app-preview img { max-width: 100% !important; height: auto !important; }
-body.app-preview img.app-scale-down { max-height: 220px !important; object-fit: contain !important; }
-body.app-preview img.app-flowchart { max-height: 320px !important; object-fit: contain !important; }
-
-body.app-preview details.app-collapsible {
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 12px;
-  padding: 10px 12px;
-  background: rgba(255,255,255,0.7);
-}
-body.app-preview details.app-collapsible > summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: rgba(0,0,0,0.70);
-  list-style: none;
-}
-body.app-preview details.app-collapsible > summary::-webkit-details-marker { display: none; }
-body.app-preview details.app-collapsible .app-muted {
-  color: rgba(0,0,0,0.55);
-  font-size: 12px;
-  line-height: 1.35;
-  margin-top: 8px;
-}
-
-/* iOS/standalone support: when JS adds body.app-standalone */
+/* iOS Add-to-Home-Screen (Safari) does not always support display-mode media query reliably.
+   We also apply app styling when JS adds body.app-standalone. */
 body.app-standalone .p-6 { padding: 14px !important; }
 body.app-standalone .p-4 { padding: 12px !important; }
 body.app-standalone .mt-6 { margin-top: 12px !important; }
@@ -182,28 +144,22 @@ body.app-standalone details.app-collapsible .app-muted {
   line-height: 1.35;
   margin-top: 8px;
 }
-
-\1
+</style>
+<!-- APP-ONLY STYLES END -->
 <!-- ===================== -->
 
 </head>
 <body class="bg-gray-50 min-h-screen text-gray-800" x-data="fluxograma()">
 
-
 <script>
 (function(){
   try{
-    const u = new URL(window.location.href);
-    const preview = (u.searchParams.get("app") === "1") || (u.hash && u.hash.includes("app=1"));
-    if(preview) document.body.classList.add("app-preview");
-
     const dm = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
-    const iosStandalone = (typeof navigator !== "undefined" && navigator.standalone === true); // iOS Add to Home Screen
+    const iosStandalone = (typeof navigator !== "undefined" && navigator.standalone === true);
     if (dm || iosStandalone) document.body.classList.add("app-standalone");
   }catch{}
 })();
 </script>
-
 <a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-white border rounded px-3 py-2" href="#main">Skip to content</a><main id="main">
 <div class="max-w-6xl mx-auto px-4 py-6">
 <header class="mb-6">
@@ -1087,11 +1043,13 @@ document.addEventListener('DOMContentLoaded', function(){
 <!-- === APP-ONLY ENHANCEMENTS BEGIN === -->
 <script>
 (function () {
-  const isStandalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || (typeof navigator !== "undefined" && navigator.standalone === true) || document.body.classList.contains("app-preview") || document.body.classList.contains("app-standalone");
-  if (!isStandalone) return;
+  const isApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+                (typeof navigator !== "undefined" && navigator.standalone === true) ||
+                document.body.classList.contains("app-standalone");
+  if (!isApp) return;
 
   // Collapse authors/collaborators into a <details>
-  const authors = document.querySelector("div.mt-1.text-center.text-gray-500.text-xs.md\:text-sm.leading-relaxed");
+  const authors = document.querySelector("div.mt-1.text-center.text-gray-500.text-xs.md\\:text-sm.leading-relaxed");
   const title = document.querySelector("h1");
   if (authors && title) {
     const details = document.createElement("details");
@@ -1105,6 +1063,7 @@ document.addEventListener('DOMContentLoaded', function(){
     body.innerHTML = authors.innerHTML;
     details.appendChild(body);
 
+    // Insert after the second subtitle line if present, otherwise after title
     const after = title.nextElementSibling && title.nextElementSibling.nextElementSibling
       ? title.nextElementSibling.nextElementSibling
       : title;
@@ -1126,11 +1085,9 @@ document.addEventListener('DOMContentLoaded', function(){
     details.appendChild(flowImg);
   }
 
-  // Scale down other images (e.g., ACLM) in app view
+  // Scale down other images (e.g., ACLM)
   document.querySelectorAll("img").forEach(img => {
-    if (!img.classList.contains("app-flowchart")) {
-      img.classList.add("app-scale-down");
-    }
+    if (!img.classList.contains("app-flowchart")) img.classList.add("app-scale-down");
   });
 })();
 </script>
