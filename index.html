@@ -2,6 +2,10 @@
 
 <html lang="en">
 <head>
+<!-- ===================== -->
+<!-- DESKTOP (WEB) CODE BEGIN -->
+<!-- ===================== -->
+
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="Interactive flow: FRIED + CFS → Dementia → Deardorff/Lee → Shared decision → Result" name="description"/>
@@ -66,6 +70,14 @@
 <!-- ===================== -->
 
 
+
+<!-- ===================== -->
+<!-- DESKTOP (WEB) CODE END -->
+<!-- ===================== -->
+
+<!-- ===================== -->
+<!-- APP (PWA) CODE BEGIN -->
+<!-- ===================== -->
 <!-- ===================== -->
 <!-- APP-ONLY STYLES BEGIN -->
 <style id="app-only-styles">
@@ -217,18 +229,13 @@ body.app-standalone details.app-collapsible .app-muted {
 
 <link rel="manifest" href="manifest.json">
   
+
+<!-- ===================== -->
+<!-- APP (PWA) CODE END -->
+<!-- ===================== -->
 </head>
 <body class="bg-gray-50 min-h-screen text-gray-800" x-data="fluxograma()">
 
-<script>
-(function(){
-  try{
-    const dm = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
-    const iosStandalone = (typeof navigator !== "undefined" && navigator.standalone === true);
-    if (dm || iosStandalone) document.body.classList.add("app-standalone");
-  }catch{}
-})();
-</script>
 <a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-white border rounded px-3 py-2" href="#main">Skip to content</a><main id="main">
 <div class="max-w-6xl mx-auto px-4 py-6">
 <header class="mb-6">
@@ -262,7 +269,7 @@ body.app-standalone details.app-collapsible .app-muted {
              ring-1 ring-gray-300 shadow-sm
              pointer-events-none no-print"
       aria-hidden="true"
-    >
+     id="fluxograma-zoom-hint">
       Click image to expand
     </div>
 
@@ -1122,6 +1129,18 @@ document.addEventListener('DOMContentLoaded', function(){
 <!-- === /AUTO-DETECT COMPLETION === -->
 
 <!-- === APP-ONLY ENHANCEMENTS BEGIN === -->
+
+<!-- App: detect standalone mode (moved here to keep App code together) -->
+<script>
+(function(){
+  try{
+    const dm = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+    const iosStandalone = (typeof navigator !== "undefined" && navigator.standalone === true);
+    if (dm || iosStandalone) document.body.classList.add("app-standalone");
+  }catch{}
+})();
+</script>
+
 <script>
 (function () {
   const isApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
@@ -1198,8 +1217,8 @@ document.addEventListener('DOMContentLoaded', function(){
   el.className = "install-prompt";
   el.innerHTML = `
     <div class="row">
-      <div class="txt">Tip: install this as an app for a cleaner, less cluttered experience.</div>
-      <button class="btn primary" type="button" id="ip-how">How</button>
+      <div class="txt">Tip: install the <b>Main App</b> (recommended) so you don’t end up with multiple icons.</div>
+      <button class="btn primary" type="button" id="ip-go">Open Main App</button>
       <button class="btn" type="button" id="ip-x">✕</button>
     </div>
     <div class="hint" id="ip-hint"></div>
@@ -1214,14 +1233,22 @@ document.addEventListener('DOMContentLoaded', function(){
     const isIOS = /iPhone|iPad|iPod/i.test(ua);
     const isSafari = isIOS && /Safari/i.test(ua) && !/CriOS|FxiOS/i.test(ua);
     if (isSafari) {
-      hint.innerHTML = `On iPhone: tap <b>Share</b> (square + arrow) → <b>Add to Home Screen</b>. Then open from the icon.`;
+      hint.innerHTML = `On iPhone: open the <b>Main App (Landing)</b> page, then tap <b>Share</b> (square + arrow) → <b>Add to Home Screen</b>.`;
+
     } else {
-      hint.innerHTML = `On Android: menu (⋮) → <b>Add to Home screen</b> / <b>Install app</b>. Then open from the icon.`;
+      hint.innerHTML = `On Android: open the <b>Main App (Landing)</b> page, then menu (⋮) → <b>Add to Home screen</b> / <b>Install app</b>.`;
+
     }
     hint.style.display = "block";
   }
 
-  el.querySelector("#ip-how").addEventListener("click", showHint);
+  el.querySelector("#ip-go").addEventListener("click", () => {
+    // Redirect user to the Landing page (Main App) where installation is offered.
+    // Use a relative URL so it works on GitHub Pages/Cloudflare without hardcoding.
+    window.location.href = "https://diggunifesp.github.io/75cs-landing/?install=1";
+  });
+  // If user taps the text, show brief instructions (optional)
+  el.querySelector(".txt").addEventListener("click", showHint);
   el.querySelector("#ip-x").addEventListener("click", () => {
     localStorage.setItem(DISMISS_KEY, "1");
     el.remove();
@@ -1230,6 +1257,21 @@ document.addEventListener('DOMContentLoaded', function(){
   // show after a short delay so it doesn't flash during load
   setTimeout(() => { el.style.display = "block"; }, 800);
 })();
+</script>
+
+
+<!-- App-only: adjust the flowchart zoom hint for touch devices -->
+<script>
+  (function () {
+    const isStandalone =
+      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+      window.navigator.standalone === true;
+
+    if (!isStandalone) return;
+
+    const hint = document.getElementById('fluxograma-zoom-hint');
+    if (hint) hint.textContent = 'Pinch to zoom';
+  })();
 </script>
 
 </body>
