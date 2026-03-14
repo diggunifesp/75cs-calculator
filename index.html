@@ -111,11 +111,11 @@ details.app-collapsible {
     background: rgba(255,255,255,0.7);
   }
   details.app-collapsible > summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: rgba(0,0,0,0.70);
-    list-style: none;
-  }
+  cursor: pointer;
+  font-weight: 600;
+  color: rgba(0,0,0,0.70);
+  list-style: none;
+}
   details.app-collapsible > summary::-webkit-details-marker { display: none; }
   details.app-collapsible .app-muted {
     color: rgba(0,0,0,0.55);
@@ -126,7 +126,7 @@ details.app-collapsible {
   /* App UI polish: center authors content and normalize spacing between boxes */
   details.app-collapsible { margin-top: 10px !important; }
   details.app-collapsible .app-muted { text-align: center; }
-  #fluxograma-hero { margin-top: 12px !important; }
+  #fluxograma-hero { margin-top: 8px !important; }
 
 }
 
@@ -161,6 +161,7 @@ body.app-standalone details.app-collapsible > summary {
   font-weight: 600;
   color: rgba(0,0,0,0.70);
   list-style: none;
+  text-align: center;
 }
 body.app-standalone details.app-collapsible > summary::-webkit-details-marker { display: none; }
 body.app-standalone details.app-collapsible .app-muted {
@@ -170,9 +171,9 @@ body.app-standalone details.app-collapsible .app-muted {
   margin-top: 8px;
 }
 
-body.app-standalone details.app-collapsible { margin-top: 10px !important; }
+body.app-standalone details.app-collapsible { margin-top: 8px !important; }
 body.app-standalone details.app-collapsible .app-muted { text-align: center; }
-body.app-standalone #fluxograma-hero { margin-top: 12px !important; }
+body.app-standalone #fluxograma-hero { margin-top: 8px !important; }
 
 </style>
 <!-- APP-ONLY STYLES END -->
@@ -1158,16 +1159,27 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <!-- App-only: adjust the flowchart zoom hint for touch devices -->
 <script>
-  (function () {
-    const isStandalone =
-      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
-      window.navigator.standalone === true;
+(function () {
 
-    if (!isStandalone) return;
+  const isStandalone =
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+    window.navigator.standalone === true;
 
-    const hint = document.getElementById('fluxograma-zoom-hint');
-    if (hint) hint.textContent = 'Pinch to zoom';
-  })();
+  if (!isStandalone) return;
+
+  const hint = document.getElementById('fluxograma-zoom-hint');
+  const flowDetails = document.querySelector('#fluxograma-hero details');
+
+  if (!hint || !flowDetails) return;
+
+  hint.textContent = 'Pinch to zoom';
+  hint.style.display = 'none';
+
+  flowDetails.addEventListener('toggle', function () {
+    hint.style.display = flowDetails.open ? 'block' : 'none';
+  });
+
+})();
 </script>
 
 </body>
