@@ -261,7 +261,7 @@ body.app-standalone #fluxograma-hero { margin-top: 12px !important; }
 <template x-if="step === 1">
 <div class="bg-white shadow rounded-lg p-4">
 <h2 class="text-lg font-semibold mb-2">Step 1 — Frailty</h2>
-<p class="text-sm text-gray-500 mb-4">Fill the Fried Criteria or Clinical Frailty Scale (CFS). Only one method is needed to proceed.</p>
+<p class="text-sm text-gray-500 mb-4">Complete either the Fried Criteria or the Clinical Frailty Scale (CFS). Only one is required to proceed.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div>
 <label class="text-sm font-medium mb-2 block">FRIED — Fried Criteria* (Recommended for geriatricians)</label>
@@ -517,7 +517,7 @@ body.app-standalone #fluxograma-hero { margin-top: 12px !important; }
 </div>
 <hr class="my-3"/>
 <div class="text-xs space-y-1">
-<p x-show="friedCount === 0">CFS: <span x-text="cfs || \'—\'"></span></p>
+<p x-show="friedCount === 0">CFS: <span x-text="cfs !== null ? cfs : '—'"></span></p>
 <p x-show="friedCount > 0">FRIED: <span x-text="friedCount + '/5 — ' + frailtyClass"></span></p>
 <p>Dementia: <span x-text="format(hasDementia)"></span></p>
 <p x-show="lee.r10 !== null || dem.r10 !== null">10-year mortality risk: <span x-show="lee.r10 !== null">Lee <span class="font-medium" x-text="fmtPct(lee.r10)"></span></span><span x-show="lee.r10 !== null &amp;&amp; dem.r10 !== null"> | </span><span x-show="dem.r10 !== null">Deardorff <span class="font-medium" x-text="fmtPct(dem.r10)"></span></span></p>
@@ -1172,16 +1172,3 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
